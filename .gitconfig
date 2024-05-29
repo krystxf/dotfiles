@@ -1,0 +1,19 @@
+[user]
+	name = Krystof
+	email = krystof.kratky2003@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	unstage = reset HEAD --
+	pfwl = push --force-with-lease
+	amnd = commit --amend 
+	uncommit = reset --soft HEAD\\^
+	rebcon = rebase --continue
+	rebab = rebase --abort

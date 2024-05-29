@@ -1,4 +1,5 @@
 alias cc="clear"
 alias la="ls -la"
 alias ee="exit"
-alias upd="yay -Syu --noconfirm"
+
+alias dcdu="docker-compose down && docker-compose up"
