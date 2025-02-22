@@ -13,7 +13,25 @@
 [alias]
 	unstage = reset HEAD --
 	pfwl = push --force-with-lease
+	pp = push
 	amnd = commit --amend 
 	uncommit = reset --soft HEAD\\^
 	rebcon = rebase --continue
 	rebab = rebase --abort
+	rebi = "!f() { git rebase -i HEAD~$1 --autosquash; }; f"
+	co = checkout
+	mm = commit -m
+	mmf = commit --fixup
+	aa = add -A
+	lg = log --graph
+[submodule]
+        recurse = true
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[rebase]
+	autosquash = true
+ 
