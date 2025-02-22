@@ -1,0 +1,31 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations": {
+        "sideBar.background": "#000000",
+        "activityBar.background": "#000000",
+        "activityBar.border": "#ffffff13",
+        "titleBar.activeBackground": "#000000",
+        "statusBar.background": "#8b00b9",
+        "terminal.background": "#000000",
+        "panel.background": "#000000",
+        "editorGroupHeader.tabsBackground": "#000000", 
+        "tab.activeBackground": "#b95300",
+        "tab.unfocusedActiveBackground": "#000000",
+    },
+    "workbench.colorTheme": "Gitpod Dark",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "terminal.integrated.defaultProfile.osx": "tmux"
+}
