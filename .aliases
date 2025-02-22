@@ -2,4 +2,29 @@ alias cc="clear"
 alias la="ls -la"
 alias ee="exit"
 
-alias dcdu="docker-compose down && docker-compose up"
+
+p() {
+    # Start at the current directory and check up to two directories above
+    dirs=( "." ".." "../.." )
+    for dir in "${dirs[@]}"; do
+        if [ -f "$dir/pnpm-lock.yaml" ]; then
+            echo "Using pnpm"
+            pnpm "$@"
+            return
+        elif [ -f "$dir/yarn.lock" ]; then
+            echo "Using yarn"
+            # Check if the command is "p i"
+            if [ "$1" = "i" ] && [ $# -eq 1 ]; then
+                echo "Translating 'p i' to 'yarn install'"
+                yarn install
+            else
+                yarn "$@"
+            fi
+            return
+        fi
+    done
+
+    # Default to npm if no lock file was found
+    echo "Using npm"
+    npm "$@"
+}
