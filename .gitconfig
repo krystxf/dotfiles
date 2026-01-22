@@ -11,19 +11,35 @@
 	process = git-lfs filter-process
 	required = true
 [alias]
-	unstage = reset HEAD --
-	pfwl = push --force-with-lease
-	pp = push
-	amnd = commit --amend 
+	aa = add -A
+	
 	uncommit = reset --soft HEAD\\^
-	rebcon = rebase --continue
-	rebab = rebase --abort
-	rebi = "!f() { git rebase -i HEAD~$1 --autosquash; }; f"
-	co = checkout
 	mm = commit -m
 	mmf = commit --fixup
-	aa = add -A
+	amnd = commit --amend 
+
+	pfwl = push --force-with-lease
+	pp = push
+	
+	
+	rebi = "!f() { git rebase -i HEAD~$1; }; f"
+	rebcon = rebase --continue
+	rebab = rebase --abort
+
+	mergecon = merge --continue
+	mergearb = merge --abort
+	
+	unstage = reset HEAD --
 	lg = log --graph
+	co = checkout
+	sl = stash list
+	ss = "!f() { \
+		if [[ \"$1\" =~ ^[0-9]+$ ]]; then \
+	  		git stash apply \"stash@{$1}\"; \
+		else \
+	  		git stash push -m \"$1\"; \
+		fi; \
+	}; f"
 [submodule]
         recurse = true
 [init]
