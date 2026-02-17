@@ -1,0 +1,3 @@
+background = #000000
+background-opacity = 1
+command = /opt/homebrew/bin/tmux
