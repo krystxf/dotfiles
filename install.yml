@@ -3,10 +3,19 @@
   hosts: localhost
   connection: local
   vars:
-    dotfiles_dir: "{{ playbook_dir }}"
+    dotfiles_dir: "{{ ansible_env.HOME }}/.dotfiles"
+    dotfiles_repo: "https://github.com/krystxf/dotfiles.git"
     home_dir: "{{ ansible_env.HOME }}"
 
   tasks:
+    # ── dotfiles repo ─────────────────────────────────────────────────────────
+    - name: Clone dotfiles repository
+      ansible.builtin.git:
+        repo: "{{ dotfiles_repo }}"
+        dest: "{{ dotfiles_dir }}"
+        version: main
+        update: true
+
     # ── tmux ─────────────────────────────────────────────────────────────────
     - name: Install tmux (macOS)
       community.general.homebrew:
