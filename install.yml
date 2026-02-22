@@ -1,0 +1,61 @@
+---
+- name: Install dotfiles
+  hosts: localhost
+  connection: local
+  vars:
+    dotfiles_dir: "{{ playbook_dir }}"
+    home_dir: "{{ ansible_env.HOME }}"
+
+  tasks:
+    # ── tmux ─────────────────────────────────────────────────────────────────
+    - name: Install tmux (macOS)
+      community.general.homebrew:
+        name: tmux
+        state: present
+      when: ansible_os_family == "Darwin"
+
+    - name: Install tmux (Debian/Ubuntu)
+      become: true
+      ansible.builtin.apt:
+        name: tmux
+        state: present
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    # ── oh-my-zsh ─────────────────────────────────────────────────────────────
+    - name: Check if oh-my-zsh is installed
+      ansible.builtin.stat:
+        path: "{{ home_dir }}/.oh-my-zsh"
+      register: omz_dir
+
+    - name: Install oh-my-zsh
+      ansible.builtin.shell:
+        cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+      when: not omz_dir.stat.exists
+
+    # ── zsh theme ─────────────────────────────────────────────────────────────
+    - name: Ensure oh-my-zsh custom themes directory exists
+      ansible.builtin.file:
+        path: "{{ home_dir }}/.oh-my-zsh/custom/themes"
+        state: directory
+        mode: "0755"
+
+    - name: Link zsh theme
+      ansible.builtin.file:
+        src: "{{ dotfiles_dir }}/.oh-my-zsh/custom/themes/my-theme.zsh-theme"
+        dest: "{{ home_dir }}/.oh-my-zsh/custom/themes/my-theme.zsh-theme"
+        state: link
+        force: true
+
+    # ── config files ──────────────────────────────────────────────────────────
+    - name: Link dotfiles
+      ansible.builtin.file:
+        src: "{{ dotfiles_dir }}/{{ item }}"
+        dest: "{{ home_dir }}/{{ item }}"
+        state: link
+        force: true
+      loop:
+        - .zshrc
+        - .aliases
+        - .vimrc
+        - .tmux.conf
