@@ -37,6 +37,12 @@
         update_cache: true
       when: ansible_os_family == "Debian"
 
+    - name: Set zsh as default shell
+      become: true
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: "{{ '/opt/homebrew/bin/zsh' if ansible_os_family == 'Darwin' else '/usr/bin/zsh' }}"
+
     # ── oh-my-zsh ─────────────────────────────────────────────────────────────
     - name: Check if oh-my-zsh is installed
       ansible.builtin.stat:
