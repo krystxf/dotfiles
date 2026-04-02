@@ -1,0 +1,18 @@
+{
+  "id": "dotfiles",
+  "version": "1.0.0",
+  "name": "Dotfiles",
+  "description": "Installs dotfiles from github.com/krystxf/dotfiles, sets up zsh, vim, and tmux",
+  "options": {
+    "repository": {
+      "type": "string",
+      "default": "https://github.com/krystxf/dotfiles.git",
+      "description": "Git repository URL for dotfiles"
+    }
+  },
+  "dependsOn": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "configureZshAsDefaultShell": true
+    }
+  }
+}

@@ -1,0 +1,56 @@
+#!/bin/zsh
+
+awk '
+function trim_right(s) {
+  sub(/[[:space:]]+$/, "", s)
+  return s
+}
+
+function strip_rprompt(s) {
+  sub(/[[:space:]]+[0-9]+ ↵$/, "", s)
+  return s
+}
+
+function flush_pending() {
+  if (have_pending) {
+    print pending
+    have_pending = 0
+    pending = ""
+  }
+}
+
+{
+  sub(/\r$/, "")
+
+  if ($0 ~ /^╭─/) {
+    flush_pending()
+    pending = $0
+    sub(/^╭─/, "", pending)
+    pending = strip_rprompt(trim_right(pending))
+    have_pending = 1
+    next
+  }
+
+  if (have_pending && $0 ~ /^╰─[#\$]/) {
+    cmd = $0
+    sub(/^╰─[#\$] ?/, "", cmd)
+
+    if (cmd != "") {
+      print pending " " cmd
+    } else {
+      print pending
+    }
+
+    have_pending = 0
+    pending = ""
+    next
+  }
+
+  flush_pending()
+  print
+}
+
+END {
+  flush_pending()
+}
+'
