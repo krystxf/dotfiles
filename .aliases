@@ -2,8 +2,6 @@ alias cc="clear"
 alias la="ls -la"
 alias ee="exit"
 
-alias rm='trash'
-
 alias dcdu="docker-compose down && docker-compose up"
 
 p() {
